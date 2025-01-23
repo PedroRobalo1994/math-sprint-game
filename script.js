@@ -94,10 +94,32 @@ function getRadioValue() {
   return radioValue;
 }
 
+// Start Countdown
+function countdownStart() {
+  const countdownValues = ['3', '2', '1', 'GO!'];
+  countdownValues.forEach((value, index) => {
+    setTimeout(() => {
+      countdown.textContent = value;
+    }, index * 1000);
+  });
+}
+
+// Navigate from Splash Page to Countdown Page
+function showCountdown() {
+  countdownPage.hidden = false;
+  splashPage.hidden = true;
+  countdownStart();
+}
+
 
 //Form that decides amount of questions
 function selectQuestionAmount(e){
   e.preventDefault();
+  questionAmount = getRadioValue();
+  console.log('question amount:', questionAmount);
+  if(questionAmount){
+    showCountdown();
+  }
 }
 
 // Event Listeners
