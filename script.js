@@ -21,6 +21,7 @@ const playAgainBtn = document.querySelector('.play-again');
 // Equations
 let questionAmount = 0;
 let equationsArray = [];
+let playerGuessArray = [];
 
 // Game Page
 let firstNumber = 0;
@@ -31,6 +32,13 @@ const wrongFormat = [];
 // Time
 
 // Scroll
+let valueY = 0;
+
+// Display Game Page
+function showGamePage() {
+  gamePage.hidden = false;
+  countdownPage.hidden = true;
+}
 
 // Get Random Number up to a certain number
 function getRandomInt(max) {
@@ -69,26 +77,47 @@ function createEquations() {
   shuffle(equationsArray);
 }
 
+// Equations to DOM
+function equationsToDOM() {
+  equationsArray.forEach((equation) => {
+    // Create a div for each equation
+    const item = document.createElement('div');
+    item.classList.add('item');
+    
+    // Create an h1 element for the equation text
+    const equationText = document.createElement('h1');
+    equationText.textContent = equation.value;
+    
+    // Append the equation text to the item div
+    item.appendChild(equationText);
+    
+    // Append the item div to the item container
+    itemContainer.appendChild(item);
+  });
+}
+
 // Dynamically adding correct/incorrect equations
-// function populateGamePage() {
-//   // Reset DOM, Set Blank Space Above
-//   itemContainer.textContent = '';
-//   // Spacer
-//   const topSpacer = document.createElement('div');
-//   topSpacer.classList.add('height-240');
-//   // Selected Item
-//   const selectedItem = document.createElement('div');
-//   selectedItem.classList.add('selected-item');
-//   // Append
-//   itemContainer.append(topSpacer, selectedItem);
+function populateGamePage() {
+  // Reset DOM, Set Blank Space Above
+  itemContainer.textContent = '';
+  // Spacer
+  const topSpacer = document.createElement('div');
+  topSpacer.classList.add('height-240');
+  // Selected Item
+  const selectedItem = document.createElement('div');
+  selectedItem.classList.add('selected-item');
+  // Append
+  itemContainer.append(topSpacer, selectedItem);
 
-//   // Create Equations, Build Elements in DOM
+  // Create Equations, Build Elements in DOM
+  createEquations();
+  equationsToDOM();
 
-//   // Set Blank Space Below
-//   const bottomSpacer = document.createElement('div');
-//   bottomSpacer.classList.add('height-500');
-//   itemContainer.appendChild(bottomSpacer);
-// }
+  // Set Blank Space Below
+  const bottomSpacer = document.createElement('div');
+  bottomSpacer.classList.add('height-500');
+  itemContainer.appendChild(bottomSpacer);
+}
 
 // Get the value from selected radio button
 function getRadioValue() {
@@ -116,7 +145,8 @@ function showCountdown() {
   countdownPage.hidden = false;
   splashPage.hidden = true;
   countdownStart();
-  createEquations();
+  populateGamePage();
+  setTimeout(showGamePage, 4000);
 }
 
 
