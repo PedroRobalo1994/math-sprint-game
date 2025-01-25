@@ -34,6 +34,15 @@ const wrongFormat = [];
 // Scroll
 let valueY = 0;
 
+// Scroll, Store user selection in playerGuessArray
+function select(guessedTrue) {
+  // Scroll 80 pixels
+  valueY += 80;
+  itemContainer.scroll(0, valueY);
+  // Add player guess to array
+  return guessedTrue ? playerGuessArray.push('true') : playerGuessArray.push('false');
+}
+
 // Display Game Page
 function showGamePage() {
   gamePage.hidden = false;
